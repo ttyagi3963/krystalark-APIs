@@ -1,7 +1,8 @@
  const Beneficiary = require('../models/beneficiary')
- 
+ const User = require('../models/user');
+
  exports.addBeneficiary = (req, res, next) => {
-     console.log(req.userId)
+     
      const name =  req.body.name;
      const email =  req.body.email;
      const relationship =  req.body.relationship;
@@ -24,31 +25,59 @@
      const coCountry =  req.body.coCountry;
      const coPhoneNumber =  req.body.coPhoneNumber;
 
+     let addedBeneficiary;
+
      const beneficiary = new Beneficiary({
             name: name,
             email: email,
             relationship: relationship,
             ssn: ssn,
-            streetAddress1: streetAddress1,
-            streetAddress2: streetAddress2,
-            city: city,
-            state: state,
-            country: country,
+            address: {
+                streetAddress1: streetAddress1,
+                streetAddress2: streetAddress2,
+                city: city,
+                state: state,
+                country: country,
+            },
             phoneNumber: phoneNumber,
 
             coName: coName,
             coEmail: coEmail,
             coRelationship: coRelationship,
             coSsn: coSsn,
-            coStreetAddress1: coStreetAddress1,
-            coStreetAddress2: coStreetAddress2,
-            coCity: coCity,
-            coState: coState,
-            coCountry: coCountry,
+            coAddress:{
+                coStreetAddress1: coStreetAddress1,
+                coStreetAddress2: coStreetAddress2,
+                coCity: coCity,
+                coState: coState,
+                coCountry: coCountry,
+            },
             coPhoneNumber: coPhoneNumber
      })
-    //   return beneficiary.save()
-    //         .then(result =>{
+     
+      return beneficiary.save()
+            .then(result =>{
+                addedBeneficiary = result
+                User.findById(req.userId)
+                    .then(user =>{
+                        if(!user){
+                            const error = new Error('Could not find user.');
+                            error.statusCode = 404;
+                            throw error;
+                        }
+                        user.beneficiarys.beneficiary = result._id
+                        return user.save();
+                    })
+                    .then(fb => {
+                        res.status(200).json({beneficiaryId: addedBeneficiary._id.toString()})
+                    })
 
-    //     })
+            }).catch(err => {
+                console.log(err)
+                if(!err.statusCode){
+                    err.statusCode = 500;
+                }
+                err.message="could not add beneficiary"
+                next(err);
+            })
  }

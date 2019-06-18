@@ -14,7 +14,7 @@ exports.login = (req, res, next) =>{
 
     const email = req.body.email;
     const password = req.body.password;  
-
+    
     User.findOne({email: email})
         .then(user => {
             if(!user){
@@ -72,7 +72,7 @@ exports.signUp = (req, res, next) => {
     const ssn = req.body.ssn || '';
     const dateOfBirth = req.body.dateOfBirth || ''
     const beneficiary = ''
-
+    console.log(email)
     bcrypt.hash(password, 12)
     .then(hashedPwd => {
         const user = new User({

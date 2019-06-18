@@ -23,7 +23,7 @@ app.use((req, res, next) => {
 
 //including routes
 app.use('/auth',authRoutes);
-app.use('/beneficiary', beneficiaryRoutes)
+app.use(beneficiaryRoutes)
 
 
 //error handling function

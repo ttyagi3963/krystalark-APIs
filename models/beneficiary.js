@@ -54,12 +54,56 @@ const beneficiarySchema = new Schema({
         required:false
     },
     careOf:{
-        name:{},
-        relationship:{},
-        ssn:{},
-        email:{},
-        address:{},
-        phoneNumber:{},
+        coName:{
+            type: String,
+            required: false
+        },
+        coRelationship:{
+            type:String,
+            required:false
+        },
+        coPicture:{
+            type:String,
+            required:false
+        },
+        coSsn:{
+            type:Number,
+            required:false
+        },
+        coEmail:{
+            type:String,
+            required:false
+        },
+        coAdddress:{
+            coStreetAddress1:{
+                 type:String,
+                required:false
+            },
+            coStreetAddress2:{
+                type:String,
+                required:false
+            },
+            coCity:{
+                type:String,
+                required:false
+            },
+            coState:{
+                type:String,
+                required:false
+            },
+            coCountry:{
+                type:String,
+                required:false
+            },
+            coZip:{
+                type:String,
+                required:false
+            }
+        },
+        coPhoneNumber:{
+            type:String,
+            required:false
+        },
     }
 
 
