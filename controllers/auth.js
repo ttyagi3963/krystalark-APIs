@@ -71,6 +71,7 @@ exports.signUp = (req, res, next) => {
     const gender = req.body.gender || '';
     const ssn = req.body.ssn || '';
     const dateOfBirth = req.body.dateOfBirth || ''
+    const beneficiary = ''
 
     bcrypt.hash(password, 12)
     .then(hashedPwd => {
@@ -80,7 +81,8 @@ exports.signUp = (req, res, next) => {
            password : hashedPwd,
            gender : gender,
            ssn : ssn,
-           dateOfBirth : dateOfBirth
+           dateOfBirth : dateOfBirth,
+           beneficiary: beneficiary
         });
        
         return user.save();

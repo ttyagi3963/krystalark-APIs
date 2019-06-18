@@ -26,7 +26,16 @@ const userSchema = new Schema({
        ssn:{
            type: String,
            required: false
+       },
+       beneficiarys:{
+           beneficiary:{
+            type: Schema.Types.ObjectId,
+            ref: 'Beneficiary',
+            required: false
+           }
+          
        }
+
 },
 {timestamps: true}
 );

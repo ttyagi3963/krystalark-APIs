@@ -17,6 +17,8 @@ const messageSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Beneficiary'
     },
+    messageWrittenContent:{},
+    messageFiles:{},
 
     deliveryDate:{},
 

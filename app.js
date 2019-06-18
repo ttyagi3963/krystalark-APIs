@@ -8,6 +8,7 @@ const MONGODB_URI =
 const app = express();
 
 const authRoutes = require('./routes/auth');
+const beneficiaryRoutes = require('./routes/beneficiary')
 
 
 app.use(bodyParser.json())
@@ -22,6 +23,7 @@ app.use((req, res, next) => {
 
 //including routes
 app.use('/auth',authRoutes);
+app.use('/beneficiary', beneficiaryRoutes)
 
 
 //error handling function
