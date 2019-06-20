@@ -40,44 +40,63 @@
                 country: country,
             },
             phoneNumber: phoneNumber,
-
-            coName: coName,
-            coEmail: coEmail,
-            coRelationship: coRelationship,
-            coSsn: coSsn,
-            coAddress:{
-                coStreetAddress1: coStreetAddress1,
-                coStreetAddress2: coStreetAddress2,
-                coCity: coCity,
-                coState: coState,
-                coCountry: coCountry,
+            careOf: {
+                coName: coName,
+                coEmail: coEmail,
+                coRelationship: coRelationship,
+                coSsn: coSsn,
+                coAddress:{
+                    coStreetAddress1: coStreetAddress1,
+                    coStreetAddress2: coStreetAddress2,
+                    coCity: coCity,
+                    coState: coState,
+                    coCountry: coCountry,
             },
-            coPhoneNumber: coPhoneNumber
+                 coPhoneNumber: coPhoneNumber
+            }
+            
      })
      
       return beneficiary.save()
             .then(result =>{
-                addedBeneficiary = result
-                User.findById(req.userId)
-                    .then(user =>{
-                        if(!user){
-                            const error = new Error('Could not find user.');
-                            error.statusCode = 404;
-                            throw error;
+                addedBeneficiary = result;
+               
+                User.updateOne(
+                        {_id: req.userId},
+                        { 
+                            $addToSet:{  beneficiarys:  addedBeneficiary._id}
                         }
-                        user.beneficiarys.beneficiary = result._id
-                        return user.save();
+                    )
+                    .then(result =>{
+                        res.status(200).json({message: "Beneficiary Added"})
                     })
-                    .then(fb => {
-                        res.status(200).json({beneficiaryId: addedBeneficiary._id.toString()})
-                    })
-
             }).catch(err => {
-                console.log(err)
+                console.log(">>>>>>>>>>>>>>>>>>>>>>>>",err)
                 if(!err.statusCode){
                     err.statusCode = 500;
                 }
                 err.message="could not add beneficiary"
                 next(err);
             })
+ };
+
+ exports.getBeneficiaryList =  (req, res, next) =>{
+
+    const userId = req.userId;
+    console.log("id of logged in user = " + userId);
+    
+    User.findById(userId).populate('beneficiarys')
+          .then(user =>{
+                res.status('200').json({userData: user})
+          })
+          .catch(err =>{
+              console.log(err)
+            if(!err.statusCode){
+                err.statusCode = 500;
+            }
+            err.message="Could not find User"
+            next(err);
+          })
  }
+
+ 

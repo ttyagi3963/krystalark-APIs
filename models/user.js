@@ -27,14 +27,12 @@ const userSchema = new Schema({
            type: String,
            required: false
        },
-       beneficiarys:{
-           beneficiary:{
-            type: Schema.Types.ObjectId,
-            ref: 'Beneficiary',
-            required: false
-           }
-          
-       }
+       beneficiarys:[{  
+                  type:Schema.Types.ObjectId,
+                  ref: 'Beneficiary'
+           }]
+
+
 
 },
 {timestamps: true}

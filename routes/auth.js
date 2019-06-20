@@ -6,10 +6,6 @@ const User = require('../models/user');
 
 const router = express.Router();
 
-
-
-
-
 router.post(
     '/login',   
     authController.login);
