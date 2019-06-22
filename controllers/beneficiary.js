@@ -99,4 +99,25 @@
           })
  }
 
+ exports.getBInfo = (req, res, next) => {
+
+    const requestUser = req.params.bId
+    
+    if(!requestUser){
+        throw new Error("User not provided")
+    }
+
+    Beneficiary.findById(requestUser)
+                .then( user => {
+                    res.status(200).json({message:" beneficiary info retrieved", beneficiary: user})
+                })
+                .catch(err => {
+                    if(!err.statusCode){
+                        err.statusCode = 500;
+                    }
+                    err.message="could not find beneficiary"
+                    next(err);
+                })
+}
+
  

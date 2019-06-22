@@ -58,18 +58,12 @@ const beneficiarySchema = new Schema({
             type: String,
             required: false
         },
-        coRelationship:{
-            type:String,
-            required:false
-        },
+        
         coPicture:{
             type:String,
             required:false
         },
-        coSsn:{
-            type:Number,
-            required:false
-        },
+        
         coEmail:{
             type:String,
             required:false

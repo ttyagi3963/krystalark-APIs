@@ -9,5 +9,6 @@ router.post('/addBeneficiary', isAuth, beneficiaryController.addBeneficiary);
 
 router.get('/getBeneficiaryList',isAuth, beneficiaryController.getBeneficiaryList)
 
+router.get('/getBeneficiaryInfo/:bId', beneficiaryController.getBInfo)
 
 module.exports = router;   
