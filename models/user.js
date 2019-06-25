@@ -23,6 +23,10 @@ const userSchema = new Schema({
            type: String,
            required: false
        },
+       picture:{
+        type:String,
+        required:false
+        },
        ssn:{
            type: String,
            required: false

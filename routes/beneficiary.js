@@ -9,6 +9,8 @@ router.post('/addBeneficiary', isAuth, beneficiaryController.addBeneficiary);
 
 router.get('/getBeneficiaryList',isAuth, beneficiaryController.getBeneficiaryList)
 
-router.get('/getBeneficiaryInfo/:bId', beneficiaryController.getBInfo)
+router.get('/beneficiary/:bId',isAuth, beneficiaryController.getBInfo);
+
+router.post('/beneficiary/uploadAvatar',isAuth, beneficiaryController.uploadAvatar)
 
 module.exports = router;   

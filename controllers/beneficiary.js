@@ -32,6 +32,7 @@
             email: email,
             relationship: relationship,
             ssn: ssn,
+            picture:'',
             address: {
                 streetAddress1: streetAddress1,
                 streetAddress2: streetAddress2,
@@ -118,6 +119,16 @@
                     err.message="could not find beneficiary"
                     next(err);
                 })
+}
+
+exports.uploadAvatar = (req, res, next) =>{
+     if(!req.file){
+         const error = new Error('No image provided');
+         error.statusCode = 422;
+         throw error;
+     }
+     const imageUrl = req.file.path
+     console.log(imageUrl)
 }
 
  
