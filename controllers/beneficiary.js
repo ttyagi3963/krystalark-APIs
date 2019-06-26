@@ -128,7 +128,33 @@ exports.uploadAvatar = (req, res, next) =>{
          throw error;
      }
      const imageUrl = req.file.path
-     console.log(imageUrl)
+     const bid = req.body.bid;
+
+     Beneficiary.updateOne
+     (
+         {_id: bid},
+         { 
+            $set:{  picture:  imageUrl}
+          }
+    )
+    .then(result =>{
+        Beneficiary
+        .findById(bid)
+        .then(b => {
+            res.status(201).json({message: "picture uploaded", beneficiary: b})
+        })
+        .catch(err =>{
+            const error = new Error("Could not find user");
+            error.statusCode = 404;
+            throw error;
+        })
+       
+    })
+    .catch(err =>{
+        const error = new Error("Could not update");
+        error.statusCode = 404;
+        throw error;
+    })
 }
 
  
