@@ -6,7 +6,7 @@ const messageSchema = new Schema({
 
     messageType: {
         type: String,
-        required:true
+        required:false
     },
     messageOwner:{
         type: Schema.Types.ObjectId,
@@ -17,12 +17,22 @@ const messageSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Beneficiary'
     },
+    messageDeliveryWhen:{
+        type: String,
+        required:false
+    },
+    frequency:{
+        type: String,
+        required:false
+    },
+    oneTimeOnlyDate:{},
+    recurringDate:{},
+    
     messageWrittenContent:{},
     messageFiles:{},
 
-    deliveryDate:{},
+   
 
-    deliveryFrequency:{}
 
 
 
