@@ -28,7 +28,8 @@ const fileFilter = (req, file, cb) =>{
 }
 
 const authRoutes = require('./routes/auth');
-const beneficiaryRoutes = require('./routes/beneficiary')
+const beneficiaryRoutes = require('./routes/beneficiary');
+const messageRoutes = require('./routes/messages');
 
 
 app.use(bodyParser.json())
@@ -47,6 +48,7 @@ app.use((req, res, next) => {
 //including routes
 app.use('/auth',authRoutes);
 app.use(beneficiaryRoutes)
+app.use('/messages',messageRoutes)
 
 
 //error handling function

@@ -34,10 +34,11 @@ const userSchema = new Schema({
        beneficiarys:[{  
                   type:Schema.Types.ObjectId,
                   ref: 'Beneficiary'
-           }]
-
-
-
+           }],
+       messages:[{
+            type:Schema.Types.ObjectId,
+            ref:'Messages'
+        }]
 },
 {timestamps: true}
 );
