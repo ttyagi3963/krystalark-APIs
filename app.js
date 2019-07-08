@@ -11,7 +11,7 @@ const app = express();
 
 const fileStorage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'images');
+        cb(null, 'files');
     },
     filename: (req,file,cb) =>{
         cb(null, new Date().toISOString().replace(/:/g, '-') +'-'+file.originalname)
@@ -19,7 +19,7 @@ const fileStorage = multer.diskStorage({
 
 })
 const fileFilter = (req, file, cb) =>{
-    if(file.mimetype === 'image/png' || file.mimetype === 'image/jpg' || file.mimetype === 'image/jpeg'){
+    if(file.mimetype === 'image/png' || file.mimetype === 'image/jpg' || file.mimetype === 'image/jpeg' || file.mimetype === 'video/webm'){
         cb(null, true)
     }
     else{
@@ -29,12 +29,14 @@ const fileFilter = (req, file, cb) =>{
 
 const authRoutes = require('./routes/auth');
 const beneficiaryRoutes = require('./routes/beneficiary')
+const messageRoutes = require('./routes/message')
 
 
 app.use(bodyParser.json())
-app.use(multer({storage: fileStorage, fileFilter: fileFilter}).single('image'))
+app.use(multer({storage: fileStorage, fileFilter: fileFilter}).single('fileObject'))
 
 app.use('/images',express.static(path.join(__dirname,'images')))
+app.use('/files',express.static(path.join(__dirname,'files')))
 
 //Setting up CORS
 app.use((req, res, next) => {
@@ -47,6 +49,7 @@ app.use((req, res, next) => {
 //including routes
 app.use('/auth',authRoutes);
 app.use(beneficiaryRoutes)
+app.use('/message', messageRoutes)
 
 
 //error handling function
