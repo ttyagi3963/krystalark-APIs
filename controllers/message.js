@@ -14,6 +14,6 @@ exports.uploadMessageFile =(req, res, next) =>{
 
         
     }
-    console.log(req.file.path)
+    console.log(req.file)
     res.status(200).json({message: req.file.path})
 }
