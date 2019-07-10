@@ -31,14 +31,26 @@ const userSchema = new Schema({
            type: String,
            required: false
        },
+       logins:{
+            type: Number,
+            required: false
+       },
+       profileType:{
+        type: String,
+        required: false,
+        default:'slave'
+       },
+       subscriptionStatus:{
+        type: Number,
+        required: true,
+        default: 0
+        //0 : unpaid , 1: paid
+       },
        beneficiarys:[{  
                   type:Schema.Types.ObjectId,
                   ref: 'Beneficiary'
-           }],
-       messages:[{
-            type:Schema.Types.ObjectId,
-            ref:'Messages'
-        }]
+           }]
+      
 },
 {timestamps: true}
 );

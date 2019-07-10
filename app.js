@@ -28,15 +28,13 @@ const fileFilter = (req, file, cb) =>{
 }
 
 const authRoutes = require('./routes/auth');
-<<<<<<< HEAD
-const beneficiaryRoutes = require('./routes/beneficiary');
-const messageRoutes = require('./routes/messages');
-=======
+
 const beneficiaryRoutes = require('./routes/beneficiary')
 const messageRoutes = require('./routes/message')
->>>>>>> 2562a65c35a4c475145fe1938ec72dbc055ab2f6
 
-
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 app.use(bodyParser.json())
 app.use(multer({storage: fileStorage, fileFilter: fileFilter}).single('fileObject'))
 
@@ -54,11 +52,9 @@ app.use((req, res, next) => {
 //including routes
 app.use('/auth',authRoutes);
 app.use(beneficiaryRoutes)
-<<<<<<< HEAD
-app.use('/messages',messageRoutes)
-=======
-app.use('/message', messageRoutes)
->>>>>>> 2562a65c35a4c475145fe1938ec72dbc055ab2f6
+
+app.use(messageRoutes)
+
 
 
 //error handling function

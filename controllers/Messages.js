@@ -4,7 +4,7 @@ const User = require('../models/user');
 
 exports.createMessage =(req, res, next)=>{
     
-          const fullName = req.body.fullName
+          const fullName = req.body.bName
           const messageType = req.body.messageType;
           const relationship = req.body.relationship;
           const messageDeliveryWhen = req.body.messageDeliveryWhen;
