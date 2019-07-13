@@ -17,6 +17,10 @@ const messageSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Beneficiary'
     },
+    messageStatus:{
+        type: String,
+        default:'Incomplete'
+    },
     messageDeliveryWhen:{
         type: String,
         required:false

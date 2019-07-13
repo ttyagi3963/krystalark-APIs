@@ -35,11 +35,14 @@ const userSchema = new Schema({
             type: Number,
             required: false
        },
-       profileType:{
+       accountType:{
         type: String,
         required: false,
-        default:'slave'
+        default:'Unprivileged'
        },
+       
+       
+       
        subscriptionStatus:{
         type: Number,
         required: true,

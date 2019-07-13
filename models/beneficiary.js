@@ -19,6 +19,10 @@ const beneficiarySchema = new Schema({
         type:Number,
         required:false
     },
+    beneficiaryStatus:{
+        type: String,
+        default:'Incomplete'
+    },
     email:{
         type:String,
         required:false

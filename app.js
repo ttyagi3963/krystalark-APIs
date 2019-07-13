@@ -28,9 +28,10 @@ const fileFilter = (req, file, cb) =>{
 }
 
 const authRoutes = require('./routes/auth');
+const beneficiaryRoutes = require('./routes/beneficiary');
+const messageRoutes = require('./routes/message');
+const userRoutes = require('./routes/user');
 
-const beneficiaryRoutes = require('./routes/beneficiary')
-const messageRoutes = require('./routes/message')
 
 app.use(bodyParser.urlencoded({
     extended: true
@@ -52,9 +53,9 @@ app.use((req, res, next) => {
 //including routes
 app.use('/auth',authRoutes);
 app.use(beneficiaryRoutes)
-
+app.use(userRoutes)
 app.use(messageRoutes)
-
+   
 
 
 //error handling function
