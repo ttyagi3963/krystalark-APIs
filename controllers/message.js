@@ -1,6 +1,6 @@
 const Beneficiary = require('../models/beneficiary');
 const Message = require('../models/message');
-
+const User  = require('../models/user')
 
 
 
@@ -22,6 +22,7 @@ exports.createMessage = (req, res, next)=>{
               name: bName,
               relationship: relationship
       })
+
       return beneficiary.save()
                    .then(b =>{
                               const message = new Message({
@@ -35,27 +36,12 @@ exports.createMessage = (req, res, next)=>{
                               })
                               return message.save()
                                             .then(messageData =>{
-                                                User.updateOne
-                                                    (
-                                                        {_id: req.userId},
-                                                        { 
-                                                            $addToSet:{beneficiarys:  bId, messages: messageData._id }
-                                                        }
-                                                    )
-                                                    .then(result => {
-                                                                                                    
-                                                    })
-                                                    .catch(err =>{
-                                                         if(!err.statusCode){
-                                                                err.statusCode = 500;
-                                                            }
-                                                            error.message ="was not able to update to user"
-                                                            next(err);
+                                                
                                                      User.updateOne
                                                             (
                                                                 {_id: req.userId},
                                                                 { 
-                                                                    $addToSet:{beneficiarys:  bId, messages: messageData._id }
+                                                                    $addToSet:{beneficiarys:  b._id, messages: messageData._id }
                                                                 }
                                                             )
                                                             .then(result => {
@@ -63,25 +49,29 @@ exports.createMessage = (req, res, next)=>{
  
                                                             })
                                                             .catch(err =>{
+                                                                console.log(err)
                                                                     if(!err.statusCode){
                                                                         err.statusCode = 500;
                                                                     }
-                                                                    error.message ="was not able to update to user"
+                                                                    err.message ="was not able to update to user"
                                                                     next(err);
-                                                            })})
+                                                            })
+                                                        
 
                                            
                                       })
                                       .catch(err =>{
+                                          console.log("message error = ", err)
                                               if(!err.statusCode){
                                                   err.statusCode = 500;
                                                   }
-                                              error.message ="Was not able to add message"
+                                              err.message ="Was not able to add message"
                                               next(err);
                                       })
                               
                    })
                    .catch(err =>{
+                       console.log("beneficiary error = "+err)
                           if(!err.statusCode){
                               err.statusCode = 500;
                           }
@@ -102,4 +92,11 @@ exports.uploadMessageFile =(req, res, next) =>{
     }
     console.log(req.file)
     res.status(200).json({message: req.file.path})
+}
+
+
+exports.getMessageList = (req, res, next) =>{
+
+    Message.find()
+
 }
