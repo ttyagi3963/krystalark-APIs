@@ -86,7 +86,8 @@
     const userId = req.userId;
     console.log("id of logged in user = " + userId);
     
-    User.findById(userId).populate('beneficiarys')
+    User.findById(userId)
+        .populate('beneficiarys')
           .then(user =>{
                 res.status('200').json({userData: user})
           })

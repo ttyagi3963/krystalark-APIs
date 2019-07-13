@@ -97,6 +97,26 @@ exports.uploadMessageFile =(req, res, next) =>{
 
 exports.getMessageList = (req, res, next) =>{
 
-    Message.find()
+    Message.find(
+                    {messageOwner: req.userId}
+                )
+                .populate('messageReciever')
+                .then(messages => {
+                     if(messages.length){
+                        res.status(200).json({status:'200', messageList: messages})
+                     }
+                     else{
+                         res.status(204).json({status:'204',messageList: messages})
+                     }
+                })
+                .catch( err =>{
+                    console.log(" Message list Error = "+ err)
+                    if(!err.statusCode){
+                        err.statusCode = 500;
+                    }
+                    err.message ="Something wriong with message retrieval"                    
+                    throw error;
+                })
+        
 
 }

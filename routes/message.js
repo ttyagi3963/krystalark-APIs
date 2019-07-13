@@ -9,5 +9,7 @@ router.post('/uploadMessageFile',isAuth, messageController.uploadMessageFile);
 
 router.post("/createMessage",isAuth, messageController.createMessage);
 
+router.get("/getMessageList",isAuth, messageController.getMessageList);
+
 
 module.exports = router;   
