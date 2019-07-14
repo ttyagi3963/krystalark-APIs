@@ -40,7 +40,21 @@ exports.login = (req, res, next) =>{
                 {expiresIn: '1h'}
             );
 
-            res.status(200).json({token: token, userId: loadedUser._id.toString()})
+            let conditions = {email: email};
+            let update = { $inc: { loginCount : 1},lastLogin: Date.now()}
+
+            User.updateOne(conditions, update)
+                .then(result=>{
+                    res.status(200).json({token: token, userId: loadedUser._id.toString()})
+                })
+                .catch(err =>{
+                    console.log("Unable to update")
+                    if(!err.statusCode){
+                        err.statusCode = 500;
+                    }
+                    next(err);
+                });
+           
 
         })
         .catch(err =>{
@@ -80,6 +94,7 @@ exports.signUp = (req, res, next) => {
            ssn : ssn,
            dateOfBirth : dateOfBirth,
            beneficiary: beneficiary
+          
         });
        
         return user.save();
@@ -92,7 +107,7 @@ exports.signUp = (req, res, next) => {
             'secretkeytosendjwttokengbngffgfghbfgnnasvgrerg',
             {expiresIn: '1h'}
         );
-        res.status(201).json({token:token, message: 'User Created',userId: result._id})
+        res.status(201).json({token:token, message: 'User Created',userId: result._id, user: result})
     })
     .catch( err =>{
         if(!err.statusCode){

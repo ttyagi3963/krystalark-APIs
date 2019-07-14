@@ -27,13 +27,27 @@ const userSchema = new Schema({
         type:String,
         required:false
         },
+
+        diskSpace:{
+            type: Number,
+            default:5
+        },
+        profileCompleteStatus:{
+            type: Boolean,
+            default:false
+        },
+        lastLogin:{
+            type: Date,
+            default: Date.now
+        },
        ssn:{
            type: String,
            required: false
        },
-       logins:{
+       loginCount:{
             type: Number,
-            required: false
+            required: false,
+            default: 1
        },
        accountType:{
         type: String,
