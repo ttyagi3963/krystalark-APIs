@@ -9,23 +9,23 @@ const MONGODB_URI =
 
 const app = express();
 
-const fileStorage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'files');
-    },
-    filename: (req,file,cb) =>{
-        cb(null, new Date().toISOString().replace(/:/g, '-') +'-'+file.originalname)
-    }
+// const fileStorage = multer.diskStorage({
+//     destination: (req, file, cb) => {
+//         cb(null, 'files');
+//     },
+//     filename: (req,file,cb) =>{
+//         cb(null, new Date().toISOString().replace(/:/g, '-') +'-'+file.originalname)
+//     }
 
-})
-const fileFilter = (req, file, cb) =>{
-    if(file.mimetype === 'image/png' || file.mimetype === 'image/jpg' || file.mimetype === 'image/jpeg' || file.mimetype === 'video/webm'){
-        cb(null, true)
-    }
-    else{
-        cb(null, false)
-    }
-}
+// })
+// const fileFilter = (req, file, cb) =>{
+//     if(file.mimetype === 'image/png' || file.mimetype === 'image/jpg' || file.mimetype === 'image/jpeg' || file.mimetype === 'video/webm'){
+//         cb(null, true)
+//     }
+//     else{
+//         cb(null, false)
+//     }
+// }
 
 const authRoutes = require('./routes/auth');
 const beneficiaryRoutes = require('./routes/beneficiary');
@@ -37,7 +37,7 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 app.use(bodyParser.json())
-app.use(multer({storage: fileStorage, fileFilter: fileFilter}).single('fileObject'))
+// app.use(multer({storage: fileStorage, fileFilter: fileFilter}).single('fileObject'))
 
 app.use('/images',express.static(path.join(__dirname,'images')))
 app.use('/files',express.static(path.join(__dirname,'files')))
