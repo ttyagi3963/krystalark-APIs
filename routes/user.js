@@ -8,7 +8,8 @@ const multer = require('multer');
 
 const fileStorage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, "files/"+req.userId);
+        cb(null, "PublicUserFiles/")
+        //cb(null, "files/"+req.userId);
     },
     filename: (req,file,cb) =>{
         cb(null, new Date().toISOString().replace(/:/g, '-') +'-'+file.originalname)
@@ -31,5 +32,7 @@ const router = express.Router();
 router.get('/getUserInfo', isAuth, userController.getUserInfo)
 
 router.post('/uploadProfilePic', isAuth, upload.single('avatar'), userController.uploadProfilePic)
+
+router.get('/updateUserProfile',isAuth,userController.updateUserProfile)
 
 module.exports = router;

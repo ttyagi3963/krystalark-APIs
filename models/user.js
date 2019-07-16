@@ -28,9 +28,13 @@ const userSchema = new Schema({
         required:false
         },
 
-        diskSpace:{
+        assigedDiskSpace:{
             type: Number,
-            default:5
+            default:5*1024*1024
+        },
+        usedDiskSpace:{
+            type: Number,
+            default:0 *1024*1024
         },
         profileCompleteStatus:{
             type: Boolean,

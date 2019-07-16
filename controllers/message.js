@@ -106,6 +106,7 @@ exports.getMessageList = (req, res, next) =>{
                         res.status(200).json({status:'200', messageList: messages})
                      }
                      else{
+                        res.status(200).json({status:'204', messageList:''})
                      }
                 })
                 .catch( err =>{

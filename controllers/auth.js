@@ -1,14 +1,11 @@
 const { validationResult } = require('express-validator/check')
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-
-
+const makeDir = require('make-dir'); 
 const User = require('../models/user');
 
 exports.login = (req, res, next) =>{
-
     let loadedUser;
-
     const email = req.body.email;
     const password = req.body.password;  
     
@@ -107,6 +104,14 @@ exports.signUp = (req, res, next) => {
             'secretkeytosendjwttokengbngffgfghbfgnnasvgrerg',
             {expiresIn: '1h'}
         );
+        //create file folder
+        (async () => {
+            const path = await makeDir('files/'+result._id);
+         
+            console.log(path);
+            //=> '/Users/sindresorhus/fun/unicorn/rainbow/cake'
+        })();
+
         res.status(201).json({token:token, message: 'User Created',userId: result._id, user: result})
     })
     .catch( err =>{

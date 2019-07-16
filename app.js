@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser'); 
-const multer = require('multer');
+// const multer = require('multer');
 
 const MONGODB_URI =
   'mongodb+srv://ttyagi:123wsx@nodepracticemax-hjdhm.mongodb.net/krystalark';
@@ -40,7 +40,7 @@ app.use(bodyParser.json())
 // app.use(multer({storage: fileStorage, fileFilter: fileFilter}).single('fileObject'))
 
 app.use('/images',express.static(path.join(__dirname,'images')))
-app.use('/files',express.static(path.join(__dirname,'files')))
+app.use('/PublicUserFiles',express.static(path.join(__dirname,'PublicUserFiles')))
 
 //Setting up CORS
 app.use((req, res, next) => {
