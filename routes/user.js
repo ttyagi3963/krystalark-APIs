@@ -32,7 +32,6 @@ const router = express.Router();
 router.get('/getUserInfo', isAuth, userController.getUserInfo)
 
 router.post('/uploadProfilePic', isAuth, upload.single('avatar'), userController.uploadProfilePic)
-
 router.get('/updateUserProfile',isAuth,userController.updateUserProfile)
 
 module.exports = router;

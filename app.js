@@ -8,6 +8,9 @@ const MONGODB_URI =
   'mongodb+srv://ttyagi:123wsx@nodepracticemax-hjdhm.mongodb.net/krystalark';
 
 const app = express();
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended:true}));
+
 
 // const fileStorage = multer.diskStorage({
 //     destination: (req, file, cb) => {
@@ -33,10 +36,8 @@ const messageRoutes = require('./routes/message');
 const userRoutes = require('./routes/user');
 
 
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
-app.use(bodyParser.json())
+
+
 // app.use(multer({storage: fileStorage, fileFilter: fileFilter}).single('fileObject'))
 
 app.use('/images',express.static(path.join(__dirname,'images')))
@@ -49,6 +50,7 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Headers','Content-Type, Authorization');
     next();
 });
+
 
 //including routes
 app.use('/auth',authRoutes);

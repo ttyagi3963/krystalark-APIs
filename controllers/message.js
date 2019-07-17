@@ -4,9 +4,10 @@ const User  = require('../models/user')
 
 
 
+
 exports.createMessage = (req, res, next)=>{
     
-   
+  
     const messageType = req.body.messageType;
     const relationship = req.body.relationship;
     const messageDeliveryWhen = req.body.messageDeliveryWhen;
@@ -14,6 +15,7 @@ exports.createMessage = (req, res, next)=>{
     const oneTimeOnlyDate = req.body.oneTimeOnlyDate;
     const recurringDate = req.body.recurring;
     const bName = req.body.bName;
+   
     console.log("you are scheduling a "+ messageType +" delivery for your "+relationship+", "+bName+".")
     console.log("it will be delivered "+frequency+", "+ messageDeliveryWhen+ " on "+oneTimeOnlyDate);
     // res.status(200).json({'status':200,'message':'message'});
