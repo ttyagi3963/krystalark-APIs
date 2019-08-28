@@ -32,12 +32,24 @@ const messageSchema = new Schema({
     oneTimeOnlyDate:{},
     recurringDate:{},
     
-    messageWrittenContent:{},
-    messageFiles:{},
-
-   
-
-
+    messageBody:{
+        type: String,
+        required:false
+    },
+    messageSubject:{
+        type: String,
+        required:false
+    },
+    messageFiles:[{  
+         name:{
+            type: String,
+            required:false
+         },
+         size:{
+             type:Number,
+             required:false
+         }
+ }]
 
 
 },{timestamps: true});

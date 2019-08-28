@@ -122,3 +122,88 @@ exports.getMessageList = (req, res, next) =>{
         
 
 }
+
+exports.postWrittenMessage = (req, res, next) =>{
+    const messageType = "Written";
+    const relationship = req.body.relationship;
+    const bName = req.body.bName;
+    const messageBody = req.body.messageBody;
+    const  messageSubject = req.body.messageSubject;
+    const uploadedFiles= req.files
+    let totalFileSize=0
+   console.log("usedSpave = "+ req.usedDiskSpace)
+    console.log("messageType = ",messageType)
+    console.log("relationship = ",relationship)
+    console.log("bName = ",bName)
+    console.log("messageBody = ",messageBody)
+    console.log("messageSubject = ",messageSubject)
+    const fileNames = uploadedFiles.map(file => {
+        totalFileSize = totalFileSize+file.size
+       return ({name:file.filename,size:file.size})
+    })
+
+    
+ 
+    const beneficiary = new Beneficiary({
+        name: bName,
+        relationship: relationship
+    })
+     return beneficiary.save()
+                       .then(b =>{
+                        const message = new Message({
+                            messageType: messageType,
+                            messageOwner: req.userId,
+                            messageReciever: b._id,
+                            messageType: messageType,
+                            messageBody: messageBody,
+                            messageSubject:  messageSubject,
+                            messageFiles: fileNames
+                                
+                        })
+                        return message.save()
+                                            .then(messageData =>{
+                                                
+                                                     User.updateOne
+                                                            (
+                                                                {_id: req.userId},
+                                                                { 
+                                                                    $addToSet:{beneficiarys:  b._id, messages: messageData._id },
+                                                                    $inc: { usedDiskSpace : totalFileSize}
+                                                                }
+                                                            )
+                                                            .then(result => {
+                                                                res.status(200).json({status:200, messageData: messageData})
+ 
+                                                            })
+                                                            .catch(err =>{
+                                                                console.log(err)
+                                                                    if(!err.statusCode){
+                                                                        err.statusCode = 500;
+                                                                    }
+                                                                    err.message ="was not able to update to user"
+                                                                    next(err);
+                                                            })
+                                                        
+
+                                           
+                                      })
+                                      .catch(err =>{
+                                          console.log("message error = ", err)
+                                              if(!err.statusCode){
+                                                  err.statusCode = 500;
+                                                  }
+                                              err.message ="Was not able to add message"
+                                              next(err);
+                                      })
+                    })
+     .catch(err =>{
+        console.log("beneficiary error = "+err)
+           if(!err.statusCode){
+               err.statusCode = 500;
+           }
+           err.message ="Was not able to add benefeciary"
+           next(err);
+   })
+    
+
+}
