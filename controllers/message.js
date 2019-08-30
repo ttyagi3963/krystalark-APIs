@@ -3,7 +3,29 @@ const Message = require('../models/message');
 const User  = require('../models/user')
 
 
-
+exports.getMessageById =(req, res, next)=>{
+   
+    Message.findById(req.params.mId)
+            .populate('messageReciever')            
+            .then(message =>{
+                if(!message){
+                    res.status(204).json({status:'204', message:''})
+                }
+                else{
+                    res.status(200).json({status:'200', message: message})
+                     
+                }
+                    
+            })
+            .catch(err =>{
+                console.log("message retrival error = "+err)
+                   if(!err.statusCode){
+                       err.statusCode = 500;
+                   }
+                   err.message ="Was not able to retrieve message"
+                   next(err);
+           })
+}
 
 exports.createMessage = (req, res, next)=>{
     
@@ -108,7 +130,7 @@ exports.getMessageList = (req, res, next) =>{
                         res.status(200).json({status:'200', messageList: messages})
                      }
                      else{
-                        res.status(200).json({status:'204', messageList:''})
+                        res.status(204).json({status:'204', messageList:''})
                      }
                 })
                 .catch( err =>{

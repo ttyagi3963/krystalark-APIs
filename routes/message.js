@@ -35,6 +35,8 @@ router.post("/createMessage",isAuth,upload.none(), messageController.createMessa
 
 router.get("/getMessageList",isAuth, messageController.getMessageList);
 
+router.get("/getMessageById/:mId",isAuth,messageController.getMessageById);
+
 router.post("/createWrittenMessage",isAuth, upload.array('filesUploaded',50),messageController.postWrittenMessage)
 
 module.exports = router;   
