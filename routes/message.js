@@ -27,7 +27,7 @@ const fileStorage = multer.diskStorage({
 //     }
 // }
 
-var upload = multer({storage: fileStorage})
+const upload = multer({storage: fileStorage})
 
 router.post('/uploadMessageFile',isAuth, messageController.uploadMessageFile);
 

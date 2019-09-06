@@ -1,6 +1,30 @@
  const Beneficiary = require('../models/beneficiary')
  const User = require('../models/user');
 
+
+exports.updateBeneficiaryInfo =(req,res,next)=>{
+    const bId= req.body.bId;
+    console.log(req.body.bId)
+    Beneficiary.updateOne(
+        {_id: bId},
+        {
+            email: req.body.email
+        }
+    )
+    .then(result=>{
+        const updatedBeneficiary = result;
+        res.status(200).json({status:200, updatedBeneficiary: updatedBeneficiary})
+    })
+    .catch(err => {
+        console.log(">>>>>>>>>>>>>>>>>>>>>>>>",err)
+        if(!err.statusCode){
+            err.statusCode = 500;
+        }
+        err.message="could not update beneficiary"
+        next(err);
+    })
+}
+
  exports.addBeneficiary = (req, res, next) => {
      
      const name =  req.body.name;
@@ -72,7 +96,7 @@
                         res.status(200).json({message: "Beneficiary Added"})
                     })
             }).catch(err => {
-                console.log(">>>>>>>>>>>>>>>>>>>>>>>>",err)
+                
                 if(!err.statusCode){
                     err.statusCode = 500;
                 }
