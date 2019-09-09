@@ -16,7 +16,13 @@ router.get('/beneficiary/:bId',isAuth, beneficiaryController.getBInfo);
 
 router.post('/beneficiary/uploadAvatar',isAuth, beneficiaryController.uploadAvatar);
 
-router.post('/beneficiary/updateBeneficiary',isAuth,upload.none(), beneficiaryController.updateBeneficiaryInfo)
+router.post('/beneficiary/updateBeneficiaryEmail',isAuth,upload.none(), beneficiaryController.updateBeneficiaryEmail)
+
+router.post('/beneficiary/updateBeneficiarySsn',isAuth,upload.none(), beneficiaryController.updateBeneficiarySsn)
+
+// router.post('/beneficiary/updateBeneficiaryPhone',isAuth,upload.none(), beneficiaryController.updateBeneficiaryPhone)
+
+// router.post('/beneficiary/updateBeneficiaryAddress',isAuth,upload.none(), beneficiaryController.updateBeneficiaryAddress)
 
 
 module.exports = router;   

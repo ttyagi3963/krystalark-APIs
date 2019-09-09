@@ -1,10 +1,35 @@
  const Beneficiary = require('../models/beneficiary')
  const User = require('../models/user');
 
+ exports.updateBeneficiarySsn =(req,res,next)=>{
+    const bId= req.body.bId;
+   
+    Beneficiary.updateOne(
+        {_id: bId},
+        {
+            ssn: req.body.ssn
+        }
+    )
+    .then(result=>{
+        const updatedBeneficiary = result;
+        res.status(200).json({status:200, updatedBeneficiary: updatedBeneficiary})
+    })
+    .catch(err => {
+        console.log(">>>>>>>>>>>>>>>>>>>>>>>>",err)
+        if(!err.statusCode){
+            err.statusCode = 500;
+        }
+        err.message="could not update beneficiary"
+        next(err);
+    })
+}
 
-exports.updateBeneficiaryInfo =(req,res,next)=>{
+
+
+exports.updateBeneficiaryEmail =(req,res,next)=>{
     const bId= req.body.bId;
     console.log(req.body.bId)
+    console.log(req.body.email)
     Beneficiary.updateOne(
         {_id: bId},
         {
